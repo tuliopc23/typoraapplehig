@@ -1,6 +1,6 @@
-# Apple HIG Theme for Typora
+# Apple HIG Theme for Markdown Editors
 
-A Typora theme that achieves 100% compliance with Apple's Human Interface Guidelines, providing a native macOS experience for markdown editing.
+100% Apple Human Interface Guidelines compliant themes for **Typora** and **iA Writer**, providing a native macOS experience for markdown editing.
 
 ## Features
 
@@ -28,12 +28,31 @@ A Typora theme that achieves 100% compliance with Apple's Human Interface Guidel
 
 ## Installation
 
-1. Download the `apple-hig-theme.css` file
+### Typora
+
+1. Download the `apple-hig.css` file
 2. Open Typora
 3. Go to `Preferences` > `Appearance` > `Open Theme Folder`
 4. Copy the CSS file to the theme folder
 5. Restart Typora
 6. Select "Apple HIG" from the theme menu
+
+### iA Writer
+
+#### macOS
+1. Download the `apple-hig.iatemplate` bundle
+2. Double-click to install, or manually copy to:
+   `~/Library/Mobile Documents/27N4MQEA55~pro~writer/Documents/Templates/`
+3. Open iA Writer
+4. Go to File → Preview → Select "Apple HIG" template
+
+#### iOS/iPadOS
+1. Download `apple-hig.iatemplate` to iCloud Drive
+2. Move to: `iCloud Drive/iA Writer/Templates/`
+3. Open iA Writer
+4. Tap Preview → Select "Apple HIG" template
+
+See `apple-hig.iatemplate/README.md` for detailed iA Writer documentation.
 
 ## Customization
 
