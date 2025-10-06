@@ -1,0 +1,255 @@
+#!/usr/bin/env node
+
+/**
+ * Font Setup Script
+ * Helps organize and setup fonts for the Apple HIG Typora theme
+ */
+
+import fs from 'fs';
+import path from 'path';
+
+const THEME_DIR = './apple-hig-theme';
+const FONTS_DIR = path.join(THEME_DIR, 'fonts');
+
+class FontSetup {
+  constructor() {
+    this.requiredFonts = [
+      'SF-Pro-Display-Regular.otf',
+      'SF-Pro-Text-Regular.otf', 
+      'SF-Mono-Regular.otf'
+    ];
+    
+    this.optionalWebFonts = [
+      'SF-Pro-Display-Regular.woff2',
+      'SF-Pro-Text-Regular.woff2',
+      'SF-Mono-Regular.woff2'
+    ];
+  }
+
+  createDirectories() {
+    console.log('📁 Creating directories...');
+    
+    if (!fs.existsSync(THEME_DIR)) {
+      fs.mkdirSync(THEME_DIR, { recursive: true });
+      console.log('✅ Created theme directory');
+    }
+    
+    if (!fs.existsSync(FONTS_DIR)) {
+      fs.mkdirSync(FONTS_DIR, { recursive: true });
+      console.log('✅ Created fonts directory');
+    }
+  }
+
+  checkFonts() {
+    console.log('\n🔍 Checking for font files...');
+    
+    const foundFonts = [];
+    const missingFonts = [];
+    
+    // Check for OTF fonts
+    this.requiredFonts.forEach(font => {
+      const fontPath = path.join(FONTS_DIR, font);
+      if (fs.existsSync(fontPath)) {
+        foundFonts.push(font);
+        console.log(`✅ Found: ${font}`);
+      } else {
+        missingFonts.push(font);
+        console.log(`❌ Missing: ${font}`);
+      }
+    });
+    
+    // Check for WOFF2 fonts
+    this.optionalWebFonts.forEach(font => {
+      const fontPath = path.join(FONTS_DIR, font);
+      if (fs.existsSync(fontPath)) {
+        foundFonts.push(font);
+        console.log(`✅ Found: ${font} (web font)`);
+      }
+    });
+    
+    return { foundFonts, missingFonts };
+  }
+
+  createFontGuide() {
+    console.log('\n📝 Creating font setup guide...');
+    
+    const guide = `# Font Setup Guide
+
+## Current Status
+- **OTF Fonts**: ${this.requiredFonts.length} required
+- **WOFF2 Fonts**: ${this.optionalWebFonts.length} optional (recommended)
+
+## Required Fonts
+${this.requiredFonts.map(font => `- ${font}`).join('\n')}
+
+## Optional Web Fonts (Recommended)
+${this.optionalWebFonts.map(font => `- ${font}`).join('\n')}
+
+## Installation Instructions
+
+### Step 1: Copy Font Files
+Copy your OTF font files to the \`fonts/\` directory:
+\`\`\`
+apple-hig-theme/
+├── apple-hig-typora.css
+└── fonts/
+    ├── SF-Pro-Display-Regular.otf
+    ├── SF-Pro-Text-Regular.otf
+    └── SF-Mono-Regular.otf
+\`\`\`
+
+### Step 2: Convert to WOFF2 (Optional)
+For better performance, convert OTF fonts to WOFF2:
+\`\`\`bash
+node convert-fonts.js
+\`\`\`
+
+### Step 3: Install Theme
+1. Copy the entire \`apple-hig-theme/\` folder to your Typora themes directory
+2. Restart Typora
+3. Select "Apple HIG" from the themes menu
+
+## Font Sources
+- **Apple Developer**: Download from Apple Developer portal
+- **System Fonts**: Use system fonts on macOS
+- **Fallback Fonts**: Theme includes comprehensive fallbacks
+
+## Troubleshooting
+- **Fonts not loading**: Check file paths and permissions
+- **Fallback fonts**: Verify font files are in correct location
+- **Performance issues**: Use WOFF2 fonts for better performance
+`;
+
+    fs.writeFileSync(path.join(THEME_DIR, 'FONT-SETUP.md'), guide);
+    console.log('✅ Font setup guide created');
+  }
+
+  createInstallationScript() {
+    console.log('\n🔧 Creating installation script...');
+    
+    const script = `#!/bin/bash
+
+# Apple HIG Typora Theme Installation Script
+
+echo "🍎 Installing Apple HIG Typora Theme..."
+
+# Get Typora themes directory
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    THEMES_DIR="$HOME/Library/Application Support/abnerworks.Typora/themes"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux
+    THEMES_DIR="$HOME/.config/Typora/themes"
+elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+    # Windows
+    THEMES_DIR="$APPDATA/Typora/themes"
+else
+    echo "❌ Unsupported operating system"
+    exit 1
+fi
+
+# Create themes directory if it doesn't exist
+mkdir -p "$THEMES_DIR"
+
+# Copy theme files
+if [ -d "apple-hig-theme" ]; then
+    cp -r apple-hig-theme/* "$THEMES_DIR/"
+    echo "✅ Theme installed successfully!"
+    echo "📁 Theme location: $THEMES_DIR"
+    echo "🎨 Restart Typora and select 'Apple HIG' from the themes menu"
+else
+    echo "❌ Theme directory not found. Run this script from the project root."
+    exit 1
+fi
+`;
+
+    fs.writeFileSync('install-theme.sh', script);
+    
+    // Make script executable on Unix systems
+    if (process.platform !== 'win32') {
+      execSync('chmod +x install-theme.sh');
+    }
+    
+    console.log('✅ Installation script created');
+  }
+
+  generateFontCSS() {
+    console.log('\n🎨 Generating font CSS...');
+    
+    const css = `/* Apple HIG Font Declarations */
+/* This file is automatically generated - do not edit manually */
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fonts/SF-Pro-Display-Regular.woff2") format("woff2"),
+       url("./fonts/SF-Pro-Display-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fonts/SF-Pro-Text-Regular.woff2") format("woff2"),
+       url("./fonts/SF-Pro-Text-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "SF Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fonts/SF-Mono-Regular.woff2") format("woff2"),
+       url("./fonts/SF-Mono-Regular.otf") format("opentype");
+}
+
+/* Font Family Variables */
+:root {
+  --font-family-sf: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-family-sf-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+}
+`;
+
+    fs.writeFileSync(path.join(FONTS_DIR, 'fonts.css'), css);
+    console.log('✅ Font CSS generated');
+  }
+
+  run() {
+    console.log('🍎 Apple HIG Font Setup');
+    console.log('========================\n');
+    
+    this.createDirectories();
+    const { foundFonts, missingFonts } = this.checkFonts();
+    
+    this.createFontGuide();
+    this.createInstallationScript();
+    this.generateFontCSS();
+    
+    console.log('\n📊 Setup Summary:');
+    console.log(`✅ Found fonts: ${foundFonts.length}`);
+    console.log(`❌ Missing fonts: ${missingFonts.length}`);
+    
+    if (missingFonts.length > 0) {
+      console.log('\n⚠️  Missing Required Fonts:');
+      missingFonts.forEach(font => console.log(`   - ${font}`));
+      console.log('\n📋 Next Steps:');
+      console.log('1. Copy your OTF font files to the fonts/ directory');
+      console.log('2. Run: node convert-fonts.js (optional, for better performance)');
+      console.log('3. Run: ./install-theme.sh (to install the theme)');
+    } else {
+      console.log('\n🎉 All required fonts found!');
+      console.log('\n📋 Next Steps:');
+      console.log('1. Run: node convert-fonts.js (optional, for better performance)');
+      console.log('2. Run: ./install-theme.sh (to install the theme)');
+    }
+    
+    console.log('\n📚 For more information, see FONT-SETUP.md');
+  }
+}
+
+// Run the setup
+const setup = new FontSetup();
+setup.run();

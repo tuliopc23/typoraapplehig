@@ -1,0 +1,37 @@
+{
+  "name": "Apple HIG",
+  "version": "1.0.0",
+  "description": "100% Apple Human Interface Guidelines compliant theme for Typora",
+  "author": "Apple HIG Theme",
+  "homepage": "https://developer.apple.com/design/human-interface-guidelines",
+  "license": "MIT",
+  "theme": {
+    "name": "Apple HIG",
+    "author": "Apple HIG Theme",
+    "version": "1.0.0",
+    "description": "A Typora theme that follows Apple's Human Interface Guidelines with 100% compliance",
+    "source": "apple-hig-theme.css",
+    "preview": "preview.png",
+    "tags": ["apple", "hig", "macos", "native", "accessibility", "dark-mode"],
+    "features": [
+      "San Francisco font family",
+      "Apple color system",
+      "8pt grid spacing",
+      "SF Symbols integration",
+      "Dark mode support",
+      "WCAG 2.1 AA accessibility",
+      "High contrast support",
+      "Responsive design"
+    ],
+    "compatibility": {
+      "typora": ">=0.9.0",
+      "platforms": ["macOS", "Windows", "Linux"]
+    },
+    "customization": {
+      "accent_color": true,
+      "font_size": true,
+      "line_height": true,
+      "spacing": true
+    }
+  }
+}
