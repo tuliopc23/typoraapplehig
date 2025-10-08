@@ -933,6 +933,60 @@ code {
 }
 
 /* ========================================
+   COVER IMAGES (SPECIFIC STYLING)
+   ======================================== */
+
+/* Cover page images - smaller, more refined styling */
+#write .cover img,
+#write .brand-icon img,
+#write .header img {
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-sm);
+  margin: 0;
+  transition: 
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+#write .cover img:hover,
+#write .brand-icon img:hover,
+#write .header img:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+/* Ensure cover images maintain aspect ratio */
+#write .cover img,
+#write .brand-icon img,
+#write .header img {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ========================================
+   ASSET PATH FALLBACKS
+   ======================================== */
+
+/* Support for assets folder structure */
+#write img[src*="assets/"] {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* SVG specific styling */
+#write img[src$=".svg"] {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* PNG specific styling */
+#write img[src$=".png"] {
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-border-secondary);
+}
+
+/* ========================================
    ALERTS / ADMONITIONS
    ======================================== */
 

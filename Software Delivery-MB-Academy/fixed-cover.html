@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB Academy Cover - Fixed</title>
+    <link rel="stylesheet" href="apple-hig.css">
+    <style>
+        /* Inline styles for better Typora compatibility */
+        .cover { 
+            display: grid; 
+            min-height: 80vh; 
+            place-items: center; 
+            margin: clamp(32px, 6vh, 96px) 0; 
+        }
+        .cover-card { 
+            border-radius: 20px; 
+            padding: clamp(24px, 6vw, 64px); 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12); 
+            max-width: 980px; 
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .brand-lockup { 
+            display: grid; 
+            grid-template-columns: auto 1fr; 
+            gap: 16px; 
+            align-items: center; 
+        }
+        .brand-icon img { 
+            width: 72px; 
+            height: 72px; 
+            border-radius: 20px; 
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); 
+        }
+        .brand-text h1 { 
+            margin: 0; 
+            font-size: 28px; 
+            line-height: 34px; 
+            font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 700;
+        }
+        .brand-text h2 { 
+            margin: 2px 0 0; 
+            font-size: 20px; 
+            line-height: 25px; 
+            color: rgba(60, 60, 67, 0.6); 
+            font-weight: 600; 
+        }
+        .divider { 
+            height: 1px; 
+            background: rgba(60, 60, 67, 0.29); 
+            margin: 24px 0; 
+        }
+        .meta { 
+            display: flex; 
+            gap: 16px; 
+            flex-wrap: wrap; 
+            color: rgba(60, 60, 67, 0.6); 
+            font-size: 13px; 
+        }
+        .chip { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            padding: 6px 12px; 
+            border-radius: 9999px; 
+            background: rgba(118, 118, 128, 0.12); 
+            color: rgba(60, 60, 67, 0.6); 
+        }
+        .chip::before { 
+            content: "●"; 
+            font-size: 0.7em; 
+            color: #007aff; 
+        }
+    </style>
+</head>
+<body>
+    <div class="cover">
+        <section class="cover-card">
+            <div class="brand-lockup">
+                <picture class="brand-icon">
+                    <source srcset="assets/Icon1.svg" type="image/svg+xml">
+                    <img src="assets/Icon1.png" alt="Tulio Cunha Logo" loading="eager" decoding="async">
+                </picture>
+                <div class="brand-text">
+                    <h1>Tulio Cunha</h1>
+                    <h2>Full‑Stack Developer</h2>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <p class="meta">
+                <span class="chip">Reusable Cover</span>
+                <span>Handbooks · Documents · Presentations</span>
+            </p>
+        </section>
+    </div>
+</body>
+</html>
