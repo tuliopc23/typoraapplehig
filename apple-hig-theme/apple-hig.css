@@ -27,8 +27,8 @@
   src:
     local(".SFNSDisplay-Regular"),
     local("SF Pro Display"),
-    url("./fonts/SF Pro/SF Pro.woff2") format("woff2"),
-    url("./fonts/SF Pro/SF Pro.woff") format("woff");
+    url("./apple-hig/SF Pro/SF Pro.woff2") format("woff2"),
+    url("./apple-hig/SF Pro/SF Pro.woff") format("woff");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -39,8 +39,8 @@
   src:
     local(".SFNSText"),
     local("SF Pro Text"),
-    url("./fonts/SF Pro Text/SF Pro Text.woff2") format("woff2"),
-    url("./fonts/SF Pro Text/SF Pro Text.woff") format("woff");
+    url("./apple-hig/SF Pro Text/SF Pro Text.woff2") format("woff2"),
+    url("./apple-hig/SF Pro Text/SF Pro Text.woff") format("woff");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -51,8 +51,8 @@
   src:
     local("SFMono-Regular"),
     local("SF Mono"),
-    url("./fonts/SF Mono Medium/SF Mono Medium.woff2") format("woff2"),
-    url("./fonts/SF Mono Medium/SF Mono Medium.woff") format("woff");
+    url("./apple-hig/SF Mono Medium/SF Mono Medium.woff2") format("woff2"),
+    url("./apple-hig/SF Mono Medium/SF Mono Medium.woff") format("woff");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -415,6 +415,7 @@ html {
 }
 
 body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
   font-family: var(--font-family-primary);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
@@ -757,6 +758,7 @@ li {
    ======================================== */
 
 code {
+  font-family: "SF Mono", ui-monospace, Menlo, Monaco, "Cascadia Code", monospace;
   font-family: var(--font-family-mono);
   font-size: 0.9em;
   background-color: var(--color-background-secondary);
@@ -801,6 +803,7 @@ code {
 }
 /* Code content */
 #write .CodeMirror {
+  font-family: "SF Mono", ui-monospace, Menlo, Monaco, "Cascadia Code", monospace;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-footnote);
   line-height: var(--line-height-footnote);
