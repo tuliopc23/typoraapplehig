@@ -1,47 +1,58 @@
 /**
- * Apple HIG Liquid Glass Theme v2.0 - UNIFIED
- * 100% Pixel-Perfect Compliance with macOS Tahoe / iOS 26
- * Post-WWDC 2025 Design Language
- * 
- * Single File Architecture for Typora Compatibility
- * Optimized for Typora 1.8+
- * Supports: Light Mode, Dark Mode, High Contrast, Reduced Motion
- * 
- * Author: Apple HIG Theme
- * Version: 2.0.0
- * Date: 2025-01-06
+ * Apple HIG Liquid Glass Theme v2.1 - UNIFIED
+ * HIG-aligned for macOS / iOS (2025)
+ *
+ * Single-file architecture for Typora 1.8+
+ * Modes: Light, Dark, High Contrast, Reduced Motion/Transparency
+ *
+ * Author: Apple HIG Theme (revised)
+ * Version: 2.1.0
+ * Date: 2025-10-08
+ *
+ * Notes:
+ * - Uses system San Francisco on Apple devices when available; falls back
+ *   to locally hosted SF fonts you provide. HIG recommends system APIs for
+ *   dynamic colors/text styles; here we use widely adopted web approximations.
+ * - Accent colors map to systemBlue equivalents: #007AFF (light) / #0A84FF (dark).
+ * - Text styles & leading match iOS defaults (Large Title 34/41 ... Caption2 11/13).
  */
 
 /* ========================================
-   FONT FACE DECLARATIONS
-   Using embedded fonts from /fonts directory
+   FONT FACE DECLARATIONS (local fallbacks)
+   Prefer system SF via -apple-system; if unavailable, use locally hosted SF.
    ======================================== */
 
-/* SF Pro Display - Variable Font for headings */
 @font-face {
-  font-family: 'SF Pro Display';
-  src: url('./fonts/SF Pro/SF Pro.woff2') format('woff2'),
-       url('./fonts/SF Pro/SF Pro.woff') format('woff');
+  font-family: "SF Pro Display";
+  src:
+    local(".SFNSDisplay-Regular"),
+    local("SF Pro Display"),
+    url("./fonts/SF Pro/SF Pro.woff2") format("woff2"),
+    url("./fonts/SF Pro/SF Pro.woff") format("woff");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
-/* SF Pro Text - Variable Font for body text */
 @font-face {
-  font-family: 'SF Pro Text';
-  src: url('./fonts/SF Pro Text/SF Pro Text.woff2') format('woff2'),
-       url('./fonts/SF Pro Text/SF Pro Text.woff') format('woff');
+  font-family: "SF Pro Text";
+  src:
+    local(".SFNSText"),
+    local("SF Pro Text"),
+    url("./fonts/SF Pro Text/SF Pro Text.woff2") format("woff2"),
+    url("./fonts/SF Pro Text/SF Pro Text.woff") format("woff");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
-/* SF Mono - Variable Font for code */
 @font-face {
-  font-family: 'SF Mono';
-  src: url('./fonts/SF Mono Medium/SF Mono Medium.woff2') format('woff2'),
-       url('./fonts/SF Mono Medium/SF Mono Medium.woff') format('woff');
+  font-family: "SF Mono";
+  src:
+    local("SFMono-Regular"),
+    local("SF Mono"),
+    url("./fonts/SF Mono Medium/SF Mono Medium.woff2") format("woff2"),
+    url("./fonts/SF Mono Medium/SF Mono Medium.woff") format("woff");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -56,7 +67,6 @@
 *::after {
   box-sizing: border-box;
 }
-
 * {
   margin: 0;
 }
@@ -67,45 +77,49 @@
 
 :root {
   /* === Font Families === */
-  --primitive-font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
-  --primitive-font-rounded: "SF Pro Rounded", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --primitive-font-mono: "SF Mono", ui-monospace, Menlo, Monaco, "Cascadia Code", monospace;
-  
-  /* === Font Sizes - Apple Typography Scale === */
-  --primitive-text-11: 11px;
-  --primitive-text-12: 12px;
-  --primitive-text-13: 13px;
-  --primitive-text-15: 15px;
-  --primitive-text-16: 16px;
-  --primitive-text-17: 17px;
-  --primitive-text-20: 20px;
-  --primitive-text-22: 22px;
-  --primitive-text-28: 28px;
-  --primitive-text-34: 34px;
-  
-  /* === Line Heights === */
-  --primitive-leading-13: 13px;
-  --primitive-leading-16: 16px;
-  --primitive-leading-18: 18px;
-  --primitive-leading-20: 20px;
-  --primitive-leading-21: 21px;
-  --primitive-leading-22: 22px;
-  --primitive-leading-25: 25px;
-  --primitive-leading-28: 28px;
-  --primitive-leading-34: 34px;
-  --primitive-leading-40: 40px;
-  
+  --primitive-font-system:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    system-ui, sans-serif;
+  --primitive-font-mono:
+    "SF Mono", ui-monospace, Menlo, Monaco, "Cascadia Code", monospace;
+
+  /* === Text Sizes (iOS default text styles) === */
+  --primitive-text-11: 11px; /* Caption2  */
+  --primitive-text-12: 12px; /* Caption1  */
+  --primitive-text-13: 13px; /* Footnote  */
+  --primitive-text-15: 15px; /* Subhead   */
+  --primitive-text-16: 16px; /* Callout   */
+  --primitive-text-17: 17px; /* Body/Headline */
+  --primitive-text-20: 20px; /* Title3    */
+  --primitive-text-22: 22px; /* Title2    */
+  --primitive-text-28: 28px; /* Title1    */
+  --primitive-text-34: 34px; /* Large Title */
+
+  /* === Line Heights (HIG-aligned) === */
+  --primitive-leading-13: 13px; /* Cap2 11/13 */
+  --primitive-leading-16: 16px; /* Cap1 12/16 */
+  --primitive-leading-18: 18px; /* Footnote   */
+  --primitive-leading-20: 20px; /* Subhead    */
+  --primitive-leading-21: 21px; /* Callout    */
+  --primitive-leading-22: 22px; /* Body/Headline */
+  --primitive-leading-25: 25px; /* Title3     */
+  --primitive-leading-28: 28px; /* Title2     */
+  --primitive-leading-34: 34px; /* Title1     */
+  --primitive-leading-41: 41px; /* Large Title */
+
   /* === Font Weights === */
   --primitive-weight-regular: 400;
   --primitive-weight-medium: 500;
   --primitive-weight-semibold: 600;
   --primitive-weight-bold: 700;
-  
-  /* === Letter Spacing === */
-  --primitive-tracking-tight: -0.41px;
+
+  /* === Letter Spacing ===
+     HIG: SF fonts manage optical spacing; avoid manual tracking.
+     Provide tokens but default to normal. */
+  --primitive-tracking-tight: 0px;
   --primitive-tracking-normal: 0px;
-  --primitive-tracking-wide: 0.07px;
-  
+  --primitive-tracking-wide: 0.02em;
+
   /* === Spacing Primitives (8pt Grid) === */
   --primitive-space-0: 0px;
   --primitive-space-1: 8px;
@@ -117,8 +131,8 @@
   --primitive-space-8: 64px;
   --primitive-space-10: 80px;
   --primitive-space-12: 96px;
-  
-  /* === Border Radius Primitives === */
+
+  /* === Radius Primitives === */
   --primitive-radius-4: 4px;
   --primitive-radius-6: 6px;
   --primitive-radius-10: 10px;
@@ -127,63 +141,63 @@
   --primitive-radius-20: 20px;
   --primitive-radius-28: 28px;
   --primitive-radius-full: 9999px;
-  
+
   /* === Blur Primitives === */
   --primitive-blur-0: 0px;
   --primitive-blur-10: 10px;
   --primitive-blur-20: 20px;
   --primitive-blur-24: 24px;
-  
+
   /* === Duration Primitives === */
   --primitive-duration-instant: 100ms;
   --primitive-duration-fast: 200ms;
   --primitive-duration-normal: 300ms;
   --primitive-duration-slow: 400ms;
   --primitive-duration-slower: 600ms;
-  
+
   /* === Easing Primitives === */
   --primitive-ease-in: cubic-bezier(0.4, 0, 1, 1);
   --primitive-ease-out: cubic-bezier(0, 0, 0.2, 1);
   --primitive-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --primitive-ease-spring: cubic-bezier(0.5, 1.5, 0.5, 1);
-  
+
   /* ========================================
      SEMANTIC TOKENS - LIGHT MODE (DEFAULT)
      ======================================== */
-  
-  /* === Background Colors === */
+
+  /* === Backgrounds (iOS/macOS family) === */
   --color-background-primary: #ffffff;
-  --color-background-secondary: #f5f5f7;
+  --color-background-secondary: #f2f2f7; /* systemGray6 */
   --color-background-tertiary: #ffffff;
   --color-background-elevated: #ffffff;
-  
+
   /* === Glass Materials === */
   --color-glass-background: rgba(255, 255, 255, 0.72);
   --color-glass-stroke: rgba(255, 255, 255, 0.18);
   --glass-blur-amount: var(--primitive-blur-20);
   --glass-saturation: 180%;
   --glass-texture-opacity: 0.03;
-  
-  /* === Text Colors === */
-  --color-text-primary: #1d1d1f;
-  --color-text-secondary: #8e8e93;
-  --color-text-tertiary: #aeaeb2;
-  --color-text-quaternary: #c7c7cc;
+
+  /* === Text Colors (approx system label set) === */
+  --color-text-primary: #1c1c1e; /* labelColor (light) */
+  --color-text-secondary: rgba(60, 60, 67, 0.6); /* secondaryLabel */
+  --color-text-tertiary: rgba(60, 60, 67, 0.3); /* tertiaryLabel  */
+  --color-text-quaternary: rgba(60, 60, 67, 0.18); /* quaternaryLabel */
   --color-text-on-accent: #ffffff;
-  
-  /* === Accent Colors === */
-  --color-accent: #0071e3;
-  --color-accent-hover: #0077ed;
-  --color-accent-active: #006edb;
-  
+
+  /* === Accent / System Colors (light) === */
+  --color-accent: #007aff; /* systemBlue */
+  --color-accent-hover: #409cff; /* hover approx */
+  --color-accent-active: #0040dd; /* pressed approx */
+
   /* === Semantic Colors === */
-  --color-success: #34c759;
-  --color-warning: #ff9500;
-  --color-error: #ff3b30;
-  --color-info: #0071e3;
-  
+  --color-success: #34c759; /* systemGreen  */
+  --color-warning: #ff9500; /* systemOrange */
+  --color-error: #ff3b30; /* systemRed    */
+  --color-info: var(--color-accent);
+
   /* === System Colors === */
-  --color-blue: #0071e3;
+  --color-blue: #007aff;
   --color-green: #34c759;
   --color-orange: #ff9500;
   --color-red: #ff3b30;
@@ -192,65 +206,65 @@
   --color-pink: #ff2d55;
   --color-teal: #5ac8fa;
   --color-indigo: #5856d6;
-  
-  /* === Border & Divider Colors === */
-  --color-border-primary: #d1d1d6;
-  --color-border-secondary: #e5e5ea;
-  --color-border-tertiary: #f5f5f7;
+
+  /* === Borders / Separators === */
+  --color-border-primary: #d1d1d6; /* systemGray4 */
+  --color-border-secondary: #e5e5ea; /* systemGray5 */
+  --color-border-tertiary: #f2f2f7; /* systemGray6 */
   --color-divider: #e5e5ea;
-  --color-separator: rgba(60, 60, 67, 0.29);
+  --color-separator: rgba(60, 60, 67, 0.29); /* iOS separator */
   --color-separator-opaque: #c6c6c8;
-  
-  /* === Fill Colors === */
+
+  /* === Fills (system fill approximations) === */
   --color-fill-primary: rgba(120, 120, 128, 0.2);
   --color-fill-secondary: rgba(120, 120, 128, 0.16);
   --color-fill-tertiary: rgba(118, 118, 128, 0.12);
   --color-fill-quaternary: rgba(116, 116, 128, 0.08);
-  
-  /* === Shadow Colors === */
+
+  /* === Shadows === */
   --color-shadow-light: rgba(0, 0, 0, 0.08);
   --color-shadow-medium: rgba(0, 0, 0, 0.12);
   --color-shadow-dark: rgba(0, 0, 0, 0.16);
-  
+
   /* ========================================
      SEMANTIC TOKENS - TYPOGRAPHY
      ======================================== */
-  
+
   --font-family-primary: var(--primitive-font-system);
   --font-family-mono: var(--primitive-font-mono);
-  
-  --font-size-caption2: var(--primitive-text-11);
-  --font-size-caption1: var(--primitive-text-12);
-  --font-size-footnote: var(--primitive-text-13);
-  --font-size-subhead: var(--primitive-text-15);
-  --font-size-body: var(--primitive-text-15);
-  --font-size-callout: var(--primitive-text-16);
-  --font-size-headline: var(--primitive-text-17);
-  --font-size-title3: var(--primitive-text-20);
-  --font-size-title2: var(--primitive-text-22);
-  --font-size-title1: var(--primitive-text-28);
-  --font-size-large-title: var(--primitive-text-34);
-  
-  --line-height-caption2: var(--primitive-leading-13);
-  --line-height-caption1: var(--primitive-leading-16);
-  --line-height-footnote: var(--primitive-leading-18);
-  --line-height-subhead: var(--primitive-leading-20);
-  --line-height-body: var(--primitive-leading-20);
-  --line-height-callout: var(--primitive-leading-21);
-  --line-height-headline: var(--primitive-leading-22);
-  --line-height-title3: var(--primitive-leading-25);
-  --line-height-title2: var(--primitive-leading-28);
-  --line-height-title1: var(--primitive-leading-34);
-  --line-height-large-title: var(--primitive-leading-40);
-  
+
+  --font-size-caption2: var(--primitive-text-11); /* 11 */
+  --font-size-caption1: var(--primitive-text-12); /* 12 */
+  --font-size-footnote: var(--primitive-text-13); /* 13 */
+  --font-size-subhead: var(--primitive-text-15); /* 15 */
+  --font-size-callout: var(--primitive-text-16); /* 16 */
+  --font-size-headline: var(--primitive-text-17); /* 17 */
+  --font-size-body: var(--primitive-text-17); /* 17 */
+  --font-size-title3: var(--primitive-text-20); /* 20 */
+  --font-size-title2: var(--primitive-text-22); /* 22 */
+  --font-size-title1: var(--primitive-text-28); /* 28 */
+  --font-size-large-title: var(--primitive-text-34); /* 34 */
+
+  --line-height-caption2: var(--primitive-leading-13); /* 11/13  */
+  --line-height-caption1: var(--primitive-leading-16); /* 12/16  */
+  --line-height-footnote: var(--primitive-leading-18); /* 13/18  */
+  --line-height-subhead: var(--primitive-leading-20); /* 15/20  */
+  --line-height-callout: var(--primitive-leading-21); /* 16/21  */
+  --line-height-headline: var(--primitive-leading-22); /* 17/22  */
+  --line-height-body: var(--primitive-leading-22); /* 17/22  */
+  --line-height-title3: var(--primitive-leading-25); /* 20/25  */
+  --line-height-title2: var(--primitive-leading-28); /* 22/28  */
+  --line-height-title1: var(--primitive-leading-34); /* 28/34  */
+  --line-height-large-title: var(--primitive-leading-41); /* 34/41 */
+
   --letter-spacing-tight: var(--primitive-tracking-tight);
   --letter-spacing-normal: var(--primitive-tracking-normal);
   --letter-spacing-wide: var(--primitive-tracking-wide);
-  
+
   /* ========================================
-     SEMANTIC TOKENS - SPACING
+     SEMANTIC TOKENS - SPACING / RADIUS / SHADOWS / TRANSITIONS
      ======================================== */
-  
+
   --spacing-0: var(--primitive-space-0);
   --spacing-1: var(--primitive-space-1);
   --spacing-2: var(--primitive-space-2);
@@ -259,11 +273,7 @@
   --spacing-5: var(--primitive-space-5);
   --spacing-6: var(--primitive-space-6);
   --spacing-8: var(--primitive-space-8);
-  
-  /* ========================================
-     SEMANTIC TOKENS - BORDER RADIUS
-     ======================================== */
-  
+
   --radius-xs: var(--primitive-radius-4);
   --radius-sm: var(--primitive-radius-6);
   --radius-md: var(--primitive-radius-10);
@@ -271,26 +281,20 @@
   --radius-xl: var(--primitive-radius-20);
   --radius-2xl: var(--primitive-radius-28);
   --radius-full: var(--primitive-radius-full);
-  
-  /* ========================================
-     SEMANTIC TOKENS - SHADOWS
-     ======================================== */
-  
+
   --shadow-xs: 0 1px 2px var(--color-shadow-light);
   --shadow-sm: 0 1px 3px var(--color-shadow-light);
   --shadow-md: 0 4px 6px var(--color-shadow-light);
   --shadow-lg: 0 8px 16px var(--color-shadow-medium);
   --shadow-xl: 0 12px 24px var(--color-shadow-medium);
   --shadow-2xl: 0 24px 48px var(--color-shadow-dark);
-  
-  /* ========================================
-     SEMANTIC TOKENS - TRANSITIONS
-     ======================================== */
-  
+
   --transition-fast: var(--primitive-duration-fast) var(--primitive-ease-out);
-  --transition-normal: var(--primitive-duration-normal) var(--primitive-ease-in-out);
+  --transition-normal: var(--primitive-duration-normal)
+    var(--primitive-ease-in-out);
   --transition-slow: var(--primitive-duration-slow) var(--primitive-ease-out);
-  --transition-spring: var(--primitive-duration-slow) var(--primitive-ease-spring);
+  --transition-spring: var(--primitive-duration-slow)
+    var(--primitive-ease-spring);
 }
 
 /* ========================================
@@ -299,36 +303,31 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* === Background Colors === */
     --color-background-primary: #000000;
-    --color-background-secondary: #1c1c1e;
+    --color-background-secondary: #1c1c1e; /* systemGray6 (dark) */
     --color-background-tertiary: #2c2c2e;
     --color-background-elevated: #1c1c1e;
-    
-    /* === Glass Materials === */
+
     --color-glass-background: rgba(30, 30, 30, 0.7);
     --color-glass-stroke: rgba(255, 255, 255, 0.12);
     --glass-texture-opacity: 0.02;
-    
-    /* === Text Colors === */
-    --color-text-primary: #f5f5f7;
-    --color-text-secondary: #98989d;
-    --color-text-tertiary: #7c7c80;
-    --color-text-quaternary: #636366;
+
+    --color-text-primary: #ffffff; /* label (dark) */
+    --color-text-secondary: rgba(235, 235, 245, 0.6);
+    --color-text-tertiary: rgba(235, 235, 245, 0.3);
+    --color-text-quaternary: rgba(235, 235, 245, 0.18);
     --color-text-on-accent: #ffffff;
-    
-    /* === Accent Colors === */
+
+    /* Accent systemBlue (dark) */
     --color-accent: #0a84ff;
-    --color-accent-hover: #409cff;
-    --color-accent-active: #0077ed;
-    
-    /* === Semantic Colors === */
+    --color-accent-hover: #66aaff;
+    --color-accent-active: #0a84ff;
+
     --color-success: #32d74b;
     --color-warning: #ff9f0a;
     --color-error: #ff453a;
-    --color-info: #0a84ff;
-    
-    /* === System Colors === */
+    --color-info: var(--color-accent);
+
     --color-blue: #0a84ff;
     --color-green: #32d74b;
     --color-orange: #ff9f0a;
@@ -338,22 +337,19 @@
     --color-pink: #ff375f;
     --color-teal: #64d2ff;
     --color-indigo: #5e5ce6;
-    
-    /* === Border & Divider Colors === */
+
     --color-border-primary: #48484a;
     --color-border-secondary: #3a3a3c;
     --color-border-tertiary: #2c2c2e;
     --color-divider: #3a3a3c;
     --color-separator: rgba(84, 84, 88, 0.65);
     --color-separator-opaque: #38383a;
-    
-    /* === Fill Colors === */
+
     --color-fill-primary: rgba(120, 120, 128, 0.36);
     --color-fill-secondary: rgba(120, 120, 128, 0.32);
     --color-fill-tertiary: rgba(118, 118, 128, 0.24);
     --color-fill-quaternary: rgba(116, 116, 128, 0.18);
-    
-    /* === Shadow Colors === */
+
     --color-shadow-light: rgba(0, 0, 0, 0.3);
     --color-shadow-medium: rgba(0, 0, 0, 0.4);
     --color-shadow-dark: rgba(0, 0, 0, 0.5);
@@ -364,7 +360,7 @@
    HIGH CONTRAST MODE
    ======================================== */
 
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more), (forced-colors: active) {
   :root {
     --color-text-primary: #000000;
     --color-text-secondary: #000000;
@@ -373,7 +369,6 @@
     --glass-blur-amount: 0px;
     --color-glass-background: var(--color-background-secondary);
   }
-  
   @media (prefers-color-scheme: dark) {
     :root {
       --color-text-primary: #ffffff;
@@ -385,13 +380,24 @@
 }
 
 /* ========================================
-   REDUCED TRANSPARENCY MODE
+   REDUCED TRANSPARENCY / MOTION
    ======================================== */
 
-@media (prefers-reduced-transparency) {
+@media (prefers-reduced-transparency: reduce) {
   :root {
     --glass-blur-amount: 0px;
     --color-glass-background: var(--color-background-secondary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -401,35 +407,41 @@
 
 html {
   font-size: 16px;
+  color-scheme: light dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-family-primary);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-tight);
+  letter-spacing: var(
+    --letter-spacing-normal
+  ); /* let SF handle optical spacing */
   color: var(--color-text-primary);
   background-color: var(--color-background-primary);
   font-weight: var(--primitive-weight-regular);
 }
 
 /* ========================================
-   LIQUID GLASS MATERIAL SYSTEM
+   LIQUID GLASS MATERIAL
    ======================================== */
 
 .glass {
   position: relative;
   background: var(--color-glass-background);
   border: 1px solid var(--color-glass-stroke);
-  backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
-  -webkit-backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
+  backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
+  -webkit-backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
 }
 
 .glass::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
@@ -444,20 +456,18 @@ body {
   z-index: 2;
 }
 
-/* Browser fallback for no backdrop-filter support */
 @supports not (backdrop-filter: blur(10px)) {
   .glass {
     background: var(--color-background-secondary);
     border: 1px solid var(--color-border-primary);
   }
-  
   .glass::before {
     display: none;
   }
 }
 
 /* ========================================
-   TYPORA MAIN CONTENT AREA
+   TYPORA MAIN CONTENT
    ======================================== */
 
 #write {
@@ -472,7 +482,6 @@ body {
     max-width: 900px;
   }
 }
-
 @media (min-width: 1800px) {
   #write {
     max-width: 1000px;
@@ -480,19 +489,25 @@ body {
 }
 
 /* ========================================
-   HEADINGS
+   HEADINGS (use Display above 20px)
    ======================================== */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
   margin-bottom: var(--spacing-2);
   font-weight: var(--primitive-weight-bold);
   line-height: 1.2;
-  letter-spacing: var(--letter-spacing-tight);
+  letter-spacing: var(--letter-spacing-normal);
   color: var(--color-text-primary);
 }
 
 h1 {
+  font-family: "SF Pro Display", var(--font-family-primary);
   font-size: var(--font-size-large-title);
   line-height: var(--line-height-large-title);
   font-weight: 700;
@@ -501,6 +516,7 @@ h1 {
 }
 
 h2 {
+  font-family: "SF Pro Display", var(--font-family-primary);
   font-size: var(--font-size-title1);
   line-height: var(--line-height-title1);
   font-weight: 700;
@@ -509,6 +525,7 @@ h2 {
 }
 
 h3 {
+  font-family: "SF Pro Display", var(--font-family-primary);
   font-size: var(--font-size-title2);
   line-height: var(--line-height-title2);
   font-weight: 600;
@@ -517,6 +534,7 @@ h3 {
 }
 
 h4 {
+  font-family: "SF Pro Display", var(--font-family-primary);
   font-size: var(--font-size-title3);
   line-height: var(--line-height-title3);
   font-weight: 600;
@@ -525,6 +543,7 @@ h4 {
 }
 
 h5 {
+  font-family: "SF Pro Text", var(--font-family-primary);
   font-size: var(--font-size-headline);
   line-height: var(--line-height-headline);
   font-weight: 600;
@@ -533,6 +552,7 @@ h5 {
 }
 
 h6 {
+  font-family: "SF Pro Text", var(--font-family-primary);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   font-weight: 600;
@@ -551,30 +571,31 @@ p {
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   color: var(--color-text-primary);
+  text-align: start;
+  text-wrap: pretty;
 }
 
 /* ========================================
-   LINKS
+   LINKS (system blue behavior)
    ======================================== */
 
 a {
   color: var(--color-accent);
   text-decoration: none;
-  transition: color var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    text-decoration-color var(--transition-fast);
   cursor: pointer;
 }
-
 a:hover {
   color: var(--color-accent-hover);
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
 }
-
 a:active {
   color: var(--color-accent-active);
 }
-
 a:focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 2px;
@@ -585,11 +606,12 @@ a:focus-visible {
    TEXT EMPHASIS
    ======================================== */
 
-strong, b {
+strong,
+b {
   font-weight: var(--primitive-weight-semibold);
 }
-
-em, i {
+em,
+i {
   font-style: italic;
 }
 
@@ -600,12 +622,13 @@ mark {
   border-radius: var(--radius-xs);
 }
 
-del, s {
+del,
+s {
   text-decoration: line-through;
   color: var(--color-text-tertiary);
 }
-
-ins, u {
+ins,
+u {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-decoration-color: var(--color-accent);
@@ -622,13 +645,14 @@ blockquote {
   padding: var(--spacing-2) var(--spacing-3);
   border-left: 4px solid var(--color-accent);
   background: var(--color-glass-background);
-  backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
-  -webkit-backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
+  backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
+  -webkit-backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
   border-radius: var(--radius-lg);
   font-style: italic;
   color: var(--color-text-secondary);
 }
-
 blockquote p:last-child {
   margin-bottom: 0;
 }
@@ -637,11 +661,11 @@ blockquote p:last-child {
    LISTS
    ======================================== */
 
-ul, ol {
+ul,
+ol {
   margin: 0 0 var(--spacing-2) 0;
   padding-left: var(--spacing-3);
 }
-
 li {
   margin-bottom: var(--spacing-1);
   line-height: var(--line-height-body);
@@ -652,11 +676,9 @@ li {
   list-style: none;
   padding-left: var(--spacing-3);
 }
-
 #write ul > li {
   position: relative;
 }
-
 #write ul > li::before {
   content: "";
   position: absolute;
@@ -674,12 +696,10 @@ li {
   list-style: none;
   padding-left: var(--spacing-3);
 }
-
 #write ol > li {
   position: relative;
   counter-increment: list-counter;
 }
-
 #write ol > li::before {
   content: counter(list-counter) ".";
   position: absolute;
@@ -689,7 +709,7 @@ li {
 }
 
 /* ========================================
-   TASK LISTS (iOS STYLE)
+   TASK LISTS (iOS style check)
    ======================================== */
 
 #write .md-task-list-item > input {
@@ -704,17 +724,15 @@ li {
   cursor: pointer;
   transition: all var(--transition-fast);
   flex-shrink: 0;
+  background: var(--color-background-primary);
 }
-
 #write .md-task-list-item > input:hover {
   border-color: var(--color-accent);
 }
-
 #write .md-task-list-item > input:checked {
   background-color: var(--color-accent);
   border-color: var(--color-accent);
 }
-
 #write .md-task-list-item > input:checked::after {
   content: "✓";
   position: absolute;
@@ -725,13 +743,10 @@ li {
   font-size: 14px;
   font-weight: bold;
 }
-
 #write .md-task-list-item > input:checked ~ p {
   color: var(--color-text-tertiary);
   text-decoration: line-through;
 }
-
-/* Remove custom bullet for task lists */
 #write ul.task-list > li::before,
 #write ul.contains-task-list > li::before {
   display: none;
@@ -752,14 +767,16 @@ code {
 }
 
 /* ========================================
-   CODE BLOCKS WITH GLASS EFFECT
+   CODE BLOCKS
    ======================================== */
 
 #write .md-fences {
   position: relative;
   background: var(--color-glass-background);
-  backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
-  -webkit-backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
+  backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
+  -webkit-backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
   border: 1px solid var(--color-glass-stroke);
   border-radius: var(--radius-xl);
   padding: var(--spacing-4) var(--spacing-2) var(--spacing-2);
@@ -767,7 +784,6 @@ code {
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
-
 /* macOS window controls */
 #write .md-fences::before {
   content: "";
@@ -778,12 +794,11 @@ code {
   height: 12px;
   background: #ff5f56;
   border-radius: var(--radius-full);
-  box-shadow: 
+  box-shadow:
     20px 0 0 #ffbd2e,
     40px 0 0 #27c93f;
   z-index: 10;
 }
-
 /* Code content */
 #write .CodeMirror {
   font-family: var(--font-family-mono);
@@ -793,38 +808,70 @@ code {
   background: transparent;
   padding: var(--spacing-1) 0;
 }
-
 .CodeMirror-gutters {
   background: transparent;
   border-right: 1px solid var(--color-border-tertiary);
   padding-right: var(--spacing-1);
 }
-
 .CodeMirror-linenumber {
   color: var(--color-text-quaternary);
   font-size: var(--font-size-caption1);
 }
 
-/* Syntax highlighting with 2025 color palette */
-.cm-comment { color: var(--color-text-tertiary); font-style: italic; }
-.cm-string { color: var(--color-success); }
-.cm-number { color: var(--color-orange); }
-.cm-variable { color: var(--color-red); }
-.cm-variable-2 { color: var(--color-orange); }
-.cm-variable-3 { color: var(--color-blue); }
-.cm-keyword { color: var(--color-purple); }
-.cm-operator { color: var(--color-teal); }
-.cm-property { color: var(--color-blue); }
-.cm-atom { color: var(--color-purple); }
-.cm-builtin { color: var(--color-teal); }
-.cm-def { color: var(--color-blue); }
-.cm-meta { color: var(--color-text-secondary); }
-.cm-tag { color: var(--color-red); }
-.cm-attribute { color: var(--color-blue); }
-.cm-link { color: var(--color-accent); text-decoration: underline; }
+/* Syntax colors (aligned to 2025 Apple palette approximations) */
+.cm-comment {
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+.cm-string {
+  color: var(--color-success);
+}
+.cm-number {
+  color: var(--color-orange);
+}
+.cm-variable {
+  color: var(--color-red);
+}
+.cm-variable-2 {
+  color: var(--color-orange);
+}
+.cm-variable-3 {
+  color: var(--color-blue);
+}
+.cm-keyword {
+  color: var(--color-purple);
+}
+.cm-operator {
+  color: var(--color-teal);
+}
+.cm-property {
+  color: var(--color-blue);
+}
+.cm-atom {
+  color: var(--color-purple);
+}
+.cm-builtin {
+  color: var(--color-teal);
+}
+.cm-def {
+  color: var(--color-blue);
+}
+.cm-meta {
+  color: var(--color-text-secondary);
+}
+.cm-tag {
+  color: var(--color-red);
+}
+.cm-attribute {
+  color: var(--color-blue);
+}
+.cm-link {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
 
 /* ========================================
-   TABLES WITH GLASS EFFECT
+   TABLES
    ======================================== */
 
 #write table {
@@ -836,13 +883,13 @@ code {
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
-
 #write thead {
   background: var(--color-glass-background);
-  backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
-  -webkit-backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
+  backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
+  -webkit-backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
 }
-
 #write thead th {
   padding: var(--spacing-2);
   text-align: left;
@@ -851,17 +898,14 @@ code {
   border-bottom: 2px solid var(--color-border-primary);
   font-size: var(--font-size-subhead);
 }
-
 #write tbody td {
   padding: var(--spacing-2);
   border-bottom: 1px solid var(--color-border-secondary);
   color: var(--color-text-primary);
 }
-
 #write tbody tr:hover {
   background: var(--color-fill-quaternary);
 }
-
 #write tbody tr:last-child td {
   border-bottom: none;
 }
@@ -876,30 +920,32 @@ code {
   margin: var(--spacing-3) 0;
   max-width: 100%;
   height: auto;
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  transition:
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal);
 }
-
 #write img:hover {
   transform: scale(1.02);
   box-shadow: var(--shadow-lg);
 }
 
 /* ========================================
-   ALERTS / ADMONITIONS (GitHub Style)
+   ALERTS / ADMONITIONS
    ======================================== */
 
 #write .md-alert {
   position: relative;
   background: var(--color-glass-background);
-  backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
-  -webkit-backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
+  backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
+  -webkit-backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
   border-left: 4px solid;
   border-radius: var(--radius-lg);
   padding: var(--spacing-2) var(--spacing-3);
   margin: var(--spacing-3) 0;
   box-shadow: var(--shadow-sm);
 }
-
 #write .md-alert > p:first-child {
   font-weight: var(--primitive-weight-semibold);
   margin-bottom: var(--spacing-1);
@@ -907,52 +953,37 @@ code {
   align-items: center;
   gap: var(--spacing-1);
 }
-
-/* Note (blue) */
 #write .md-alert.md-alert-note {
   border-left-color: var(--color-blue);
 }
-
+#write .md-alert.md-alert-tip {
+  border-left-color: var(--color-success);
+}
+#write .md-alert.md-alert-warning {
+  border-left-color: var(--color-warning);
+}
+#write .md-alert.md-alert-caution {
+  border-left-color: var(--color-orange);
+}
+#write .md-alert.md-alert-important {
+  border-left-color: var(--color-error);
+}
 #write .md-alert.md-alert-note > p:first-child::before {
   content: "ℹ️";
   font-size: 1.2em;
 }
-
-/* Tip (green) */
-#write .md-alert.md-alert-tip {
-  border-left-color: var(--color-success);
-}
-
 #write .md-alert.md-alert-tip > p:first-child::before {
   content: "💡";
   font-size: 1.2em;
 }
-
-/* Warning (yellow/orange) */
-#write .md-alert.md-alert-warning {
-  border-left-color: var(--color-warning);
-}
-
 #write .md-alert.md-alert-warning > p:first-child::before {
   content: "⚠️";
   font-size: 1.2em;
 }
-
-/* Caution (orange) */
-#write .md-alert.md-alert-caution {
-  border-left-color: var(--color-orange);
-}
-
 #write .md-alert.md-alert-caution > p:first-child::before {
   content: "🚨";
   font-size: 1.2em;
 }
-
-/* Important (red) */
-#write .md-alert.md-alert-important {
-  border-left-color: var(--color-error);
-}
-
 #write .md-alert.md-alert-important > p:first-child::before {
   content: "‼️";
   font-size: 1.2em;
@@ -1002,14 +1033,14 @@ sup.md-footnote {
   font-size: 0.75em;
   font-weight: var(--primitive-weight-medium);
   margin-left: 2px;
-  transition: all var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
-
 sup.md-footnote:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-sm);
 }
-
 .md-def-footnote {
   padding: var(--spacing-2);
   background: var(--color-background-secondary);
@@ -1019,18 +1050,19 @@ sup.md-footnote:hover {
 }
 
 /* ========================================
-   MATH EXPRESSIONS
+   MATH
    ======================================== */
 
 .md-inline-math {
   color: var(--color-accent);
   font-family: var(--font-family-mono);
 }
-
 .md-math-block {
   background: var(--color-glass-background);
-  backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
-  -webkit-backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
+  backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
+  -webkit-backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
   border: 1px solid var(--color-glass-stroke);
   border-radius: var(--radius-lg);
   padding: var(--spacing-3);
@@ -1045,8 +1077,10 @@ sup.md-footnote:hover {
 
 pre.md-meta-block {
   background: var(--color-glass-background);
-  backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
-  -webkit-backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
+  backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
+  -webkit-backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
   border: 1px solid var(--color-glass-stroke);
   border-radius: var(--radius-lg);
   padding: var(--spacing-2);
@@ -1062,24 +1096,23 @@ pre.md-meta-block {
 
 .md-toc {
   background: var(--color-glass-background);
-  backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
-  -webkit-backdrop-filter: saturate(var(--glass-saturation)) blur(var(--glass-blur-amount));
+  backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
+  -webkit-backdrop-filter: saturate(var(--glass-saturation))
+    blur(var(--glass-blur-amount));
   border: 1px solid var(--color-glass-stroke);
   border-radius: var(--radius-lg);
   padding: var(--spacing-3);
   margin: var(--spacing-3) 0;
   box-shadow: var(--shadow-sm);
 }
-
 .md-toc-h1 {
   font-weight: var(--primitive-weight-bold);
   margin-top: var(--spacing-2);
 }
-
 .md-toc-h1 a {
   color: var(--color-text-primary);
 }
-
 .md-toc a {
   color: var(--color-text-secondary);
   text-decoration: none;
@@ -1087,7 +1120,6 @@ pre.md-meta-block {
   display: block;
   padding: 2px 0;
 }
-
 .md-toc a:hover {
   color: var(--color-accent);
 }
@@ -1115,14 +1147,13 @@ pre.md-meta-block {
   background-color: var(--color-accent);
   color: var(--color-text-on-accent);
 }
-
 ::-moz-selection {
   background-color: var(--color-accent);
   color: var(--color-text-on-accent);
 }
 
 /* ========================================
-   FOCUS STATES
+   FOCUS STATES (contrast-conscious)
    ======================================== */
 
 *:focus-visible {
@@ -1139,45 +1170,40 @@ pre.md-meta-block {
   width: 10px;
   height: 10px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--color-background-secondary);
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--color-fill-primary);
   border-radius: var(--radius-full);
   border: 2px solid var(--color-background-secondary);
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-fill-secondary);
 }
 
 /* ========================================
-   RESPONSIVE ADJUSTMENTS
+   RESPONSIVE
    ======================================== */
 
 @media (max-width: 767px) {
   html {
     font-size: 14px;
   }
-  
   #write {
     padding: var(--spacing-2);
   }
-  
+
   h1 {
     font-size: var(--font-size-title1);
     line-height: var(--line-height-title1);
   }
-  
   h2 {
     font-size: var(--font-size-title2);
     line-height: var(--line-height-title2);
   }
-  
-  /* Reduce glass blur on mobile for performance */
+
+  /* Reduce blur on mobile for perf */
   .glass,
   #write .md-fences,
   #write table thead,
@@ -1189,7 +1215,7 @@ pre.md-meta-block {
     backdrop-filter: saturate(var(--glass-saturation)) blur(10px);
     -webkit-backdrop-filter: saturate(var(--glass-saturation)) blur(10px);
   }
-  
+
   /* Horizontal scroll for tables */
   #write table {
     display: block;
@@ -1198,21 +1224,7 @@ pre.md-meta-block {
 }
 
 /* ========================================
-   ACCESSIBILITY - REDUCED MOTION
-   ======================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ========================================
-   PRINT STYLES
+   PRINT
    ======================================== */
 
 @media print {
@@ -1220,8 +1232,7 @@ pre.md-meta-block {
     max-width: 100%;
     padding: 0;
   }
-  
-  /* Remove glass effects */
+
   .glass,
   #write .md-fences,
   #write table thead,
@@ -1234,41 +1245,42 @@ pre.md-meta-block {
     -webkit-backdrop-filter: none !important;
     box-shadow: none !important;
   }
-  
-  /* Simplify borders */
+
   #write .md-fences,
   #write table,
   #write .md-alert {
     border: 1px solid #000000;
   }
-  
-  /* Force black text for print */
+
   body,
   #write,
   #write * {
     color: #000000 !important;
   }
-  
-  /* Page breaks */
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     page-break-after: avoid;
   }
-  
-  pre, blockquote, table {
+  pre,
+  blockquote,
+  table {
     page-break-inside: avoid;
   }
-  
+
   a {
     color: #000000;
     text-decoration: underline;
   }
-  
   a[href]::after {
     content: " (" attr(href) ")";
     font-size: 0.8em;
   }
 }
-
 /* ========================================
-   END OF APPLE HIG LIQUID GLASS THEME v2.0
+   END OF APPLE HIG LIQUID GLASS THEME v2.1
    ======================================== */

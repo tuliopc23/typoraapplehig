@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Write Custom Theme for Typora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">  
+  <link href="/assets/css/pure-min.css" rel="stylesheet" />
+  <!--link href="/assets/css/jekyllthemes.css" rel="stylesheet" /-->
+  <link href="/assets/css/syntax.css" rel="stylesheet" />
+  <link href="/assets/css/typora-wiki.css" rel="stylesheet" />
+  <link rel='icon' href='/img/favicon-16.png' sizes='16x16'>
+  <link rel='icon' href='/img/favicon-32.png' sizes='32x32'>
+  <link rel='icon' href='/img/favicon-64.png' sizes='64x64'>
+  <link rel='icon' href='/img/favicon-128.png' sizes='128x128'>
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@typora">
+  <meta name="twitter:title" content="Write Custom Theme for Typora">
+  <meta name="twitter:url" content="/doc/Write-Custom-Theme/">
+  <meta name="twitter:description" content="Translations 简体中文, 繁體中文, 日本語 Update – CSS Variables Overwriting existing CSS Variables is more recommended if you want to define fonts, colors, backgrounds. Earlier versions of macOS/Safari does not support this, but it is still much easier to use. Common used ones are: :root { --bg-color: #ffffff; /*change background*/ --text-color: #333333; /*change text color*/ --md-char-color: #C7C5C5; /*change color of meta characetrs like `*` in markdown */ --meta-content-color: #5b808d; /*change color of meta contents like image text or link address in markdown */ --primary-color: #428bca; /* color of primary buttons */ --primary-btn-border-color: #285e8e; --primary-btn-text-color: #fff; --window-border: 1px solid #eee; /*border for...">
+  <meta name="twitter:image" content="/img/twitter-sum.png">
+  <script>
+  if (window.location.protocol != "https:"){
+      window.location.protocol = "https";
+  }
+  </script>
+</head>
+
+<body>
+  <style type="text/css">
+
+    body {
+      font-family: "Merriweather", "PT Serif", Georgia, "Times New Roman", "STSong", Serif;
+      font-weight: 300;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: #2E2E2E;
+      line-height: 1.15em;
+      font-family: 'Open Sans','Hiragino Sans GB','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
+      text-rendering: geometricPrecision;
+    }
+
+  	#pagecontainer {
+  		background-color: #fff; 
+  		min-height: calc(100vh - 510px);
+  	}
+
+    #post-content {
+      padding-top: 36px;
+      border-top: 1px dashed #999999;
+      line-height: 1.6rem;
+      padding-bottom: 100px;
+    }
+
+    #post-content>blockquote:first-child {
+      padding-top: 0.4em;
+      padding-bottom: 0.4em;
+      margin-bottom:2em;
+      margin-left: 0;
+    }
+
+  	.nav {
+      border-bottom: none;
+      height: auto;
+    }
+
+  	.inner-page {
+  		width: 100%;
+  		max-width: 800px;
+  		margin: auto;
+  		padding:24px;
+  	}
+
+  	h1 {
+  		border-bottom: 0;
+  	}
+
+    #header {
+      padding-bottom: 32px;
+    }
+
+    #header h1 {  
+      text-align: center;
+      margin-top: 81px;
+      margin-bottom: 48px;
+      white-space: pre-wrap;
+    }
+
+    h1 {
+      font-size: 3.6rem;
+      letter-spacing: -2px;
+      text-indent: -3px;
+    }
+
+    .pure-menu-active>.pure-menu-link, .pure-menu-link:hover, .pure-menu-link:focus {
+        background-color: initial;
+        border: #777 solid 1px;
+    }
+
+    .post-title h1{
+      
+    }
+
+    .post-meta {
+      font-style: italic;
+      text-align: center;
+      color: #7a7a7a;
+    }
+
+    div.highlighter-rouge {
+      padding: 8px;
+      border: 1px #777 solid;
+      line-height: 1.2rem;
+      font-family: Menlo, Monaco, "Courier New", monospace;
+      overflow-x: auto;
+    }
+
+    div.highlighter-rouge pre{
+      overflow: visible;
+      font-size: 0.95em;
+    }
+
+    a {
+      color: #463F5C;
+      text-decoration: underline;
+    }
+  </style>
+
+  <header class="pure-menu pure-menu-horizontal nav post-title" id="header">
+    <div class="gallery">
+      <ul class="pure-menu-list" style="float: left; margin-left:1em;position: absolute;">
+        <li class="pure-menu-item pure-menu-active">
+<a href="/doc" class="pure-menu-link" id="title-bar-feature-btn">All Theme Docs</a>
+        </li>
+      </ul>
+    </div>
+    <h1>Write Custom Theme for Typora</h1>
+    <section class="post-meta">
+    <time>July 16, 2016</time>
+    by
+    <span>typora.io</span>
+    </section>
+  </header>
+
+  <div id="pagecontainer" class="container">
+    <div id="post-content" class="inner-page">
+        <h2 id="translations">Translations</h2>
+
+<p><a href="/doc/zh/Write-Custom-Theme/">简体中文</a>, <a href="https://pjchender.dev/app/note-typora-custom-theme/">繁體中文</a>, <a href="/doc/ja/Write-Custom-Theme/">日本語</a></p>
+
+<h2 id="update--css-variables">Update – CSS Variables</h2>
+
+<p>Overwriting existing <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables">CSS Variables</a> is more recommended if you want to define fonts, colors, backgrounds. Earlier versions of macOS/Safari does not support this, but it is still much easier to use. Common used ones are:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">:root</span> <span class="p">{</span>
+   <span class="py">--bg-color</span><span class="p">:</span>  <span class="m">#ffffff</span><span class="p">;</span> <span class="c">/*change background*/</span>
+   <span class="py">--text-color</span><span class="p">:</span> <span class="m">#333333</span><span class="p">;</span> <span class="c">/*change text color*/</span>
+   <span class="py">--md-char-color</span><span class="p">:</span> <span class="m">#C7C5C5</span><span class="p">;</span> <span class="c">/*change color of meta characetrs like `*` in markdown */</span>
+   <span class="py">--meta-content-color</span><span class="p">:</span> <span class="m">#5b808d</span><span class="p">;</span> <span class="c">/*change color of meta contents like image text or link address in markdown */</span>
+
+   <span class="py">--primary-color</span><span class="p">:</span> <span class="m">#428bca</span><span class="p">;</span> <span class="c">/* color of primary buttons */</span>
+   <span class="py">--primary-btn-border-color</span><span class="p">:</span> <span class="m">#285e8e</span><span class="p">;</span>
+   <span class="py">--primary-btn-text-color</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+
+   <span class="py">--window-border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="m">#eee</span><span class="p">;</span> <span class="c">/*border for sidebar, etc*/</span>
+
+   <span class="py">--active-file-bg-color</span><span class="p">:</span> <span class="m">#eee</span><span class="p">;</span> <span class="c">/*background color if list item in file tree or file list*/</span>
+   <span class="py">--active-file-text-color</span><span class="p">:</span> <span class="nb">inherit</span><span class="p">;</span>
+   <span class="py">--active-file-border-color</span><span class="p">:</span> <span class="m">#777</span><span class="p">;</span>
+
+   <span class="py">--side-bar-bg-color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--bg-color</span><span class="p">);</span> <span class="c">/*change background of sidebar*/</span>
+   <span class="py">--item-hover-bg-color</span><span class="p">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">229</span><span class="p">,</span> <span class="m">229</span><span class="p">,</span> <span class="m">229</span><span class="p">,</span> <span class="m">0.59</span><span class="p">);</span> <span class="c">/*background of control items when hover, like menu in sidebar*/</span>
+   <span class="py">--item-hover-text-color</span><span class="p">:</span> <span class="nb">inherit</span><span class="p">;</span>
+   <span class="py">--monospace</span><span class="p">:</span> <span class="nb">monospace</span><span class="p">;</span> <span class="c">/*monospace font for codes, fences*/</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The variables may change in future, so you <a href="#test-in-typora">could use DevTools in Typora to confirm it</a>.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>If you want to write a custom CSS theme for Typora, all you need to do is:</p>
+
+<ol>
+  <li>
+    <p>Create a new css file. The file name <strong>should not include capitalised characters or whitespace</strong>, for example: <code class="language-plaintext highlighter-rouge">my-typora-theme</code> is a valid file name.</p>
+  </li>
+  <li>
+    <p>Write the css file.</p>
+
+    <p>We prepared a <a href="https://github.com/typora/typora-theme-toolkit">toolkit</a> for you to get started or to do simple testing.</p>
+
+    <p>If you want to write one from scratch, pick the template.less, and fill it.</p>
+
+    <p>If you want to convert existing css files (from Wordpress or Jekyll theme), just copy the content, and then add styles those css files did not cover, like styles for “toc” or for UI components.</p>
+  </li>
+  <li>
+    <p>Tweak/Debug css classes and styles.</p>
+
+    <p>You could also follow <a href="/doc/Install-Theme/">how to install custom theme</a> to install and use the theme and test it with Typora.</p>
+
+    <p>To debug CSS in Typora like in Safari or Chrome, you could enable debug mode from help menu (macOS) or from preferences panel (macOS/Linux/Windows) and find &amp; click “Inspect Elements” from context menu, which will pop up the <a href="https://developer.chrome.com/devtools">DevTools</a> like Safari or Chrome browser. On Linux/Windows version, you could toggle it from <code class="language-plaintext highlighter-rouge">View</code> menu or just press <code class="language-plaintext highlighter-rouge">F12</code>.</p>
+
+    <p>You could also put the css file you created into toolkit/theme/test.css along with resources like image or font it uses. And open html files under toolkit/core and toolkit/electron to preview your css. Please preview the html files using Safari on Mac or Chrome on Linux/Windows.</p>
+  </li>
+  <li>
+    <p>If you want to share your theme, just make a fork and make a pull request to <a href="https://github.com/typora/typora-theme-gallery">Typora Theme Gallery</a>.</p>
+  </li>
+</ol>
+
+<h2 id="basic-rules">Basic Rules</h2>
+
+<ol>
+  <li>File naming rule for theme css: Do not use capitalized letters, and please replace whitespace with <code class="language-plaintext highlighter-rouge">-</code>, and Typora will convert them to readable label in menu item. For example, for <code class="language-plaintext highlighter-rouge">my-first-typora-theme.css</code>, Typora will put an menu item “My First Typora Theme” under “Themes” menu.</li>
+  <li>Put default font size into <code class="language-plaintext highlighter-rouge">html</code>, then for elements like <code class="language-plaintext highlighter-rouge">h1</code> or <code class="language-plaintext highlighter-rouge">p</code>, use <code class="language-plaintext highlighter-rouge">rem</code> for their <code class="language-plaintext highlighter-rouge">font-size</code> property, or else custom font size in preference panel will not work.</li>
+  <li>Use tag as selectors if possible. For example, for <code class="language-plaintext highlighter-rouge">### heading 3</code>, use <code class="language-plaintext highlighter-rouge">h3</code> instead of <code class="language-plaintext highlighter-rouge">h3.md-header</code>, because for any markdown render, “### heading 3” will be converted to <code class="language-plaintext highlighter-rouge">h3</code> tag. And for typora, we will keep as less html attributes (including class) as possible just like other markdown convertors. You could limit <code class="language-plaintext highlighter-rouge">h3</code> in writing area by <code class="language-plaintext highlighter-rouge">#write h3</code> selector.</li>
+  <li>Typora is created upon Webkit (on macOS) or Chromium (on Windows/Linux), so please use css properties supported by Chrome or Safari (aka Webkit).</li>
+  <li>Some modifications of CSS may cause Typora not to work as expected, for example, adding <code class="language-plaintext highlighter-rouge">white-space: pre-wrap;</code> to selector <code class="language-plaintext highlighter-rouge">#write</code> will make  <code class="language-plaintext highlighter-rouge">\t</code> cannot be inserted by pressing Tab key, so please overwrite default css styles as less as possible, test it out.</li>
+</ol>
+
+<hr>
+
+<p>Table of Contents:</p>
+
+<ul id="markdown-toc">
+  <li><a href="#translations" id="markdown-toc-translations">Translations</a></li>
+  <li><a href="#update--css-variables" id="markdown-toc-update--css-variables">Update – CSS Variables</a></li>
+  <li><a href="#summary" id="markdown-toc-summary">Summary</a></li>
+  <li><a href="#basic-rules" id="markdown-toc-basic-rules">Basic Rules</a></li>
+  <li><a href="#changes-and-updates" id="markdown-toc-changes-and-updates">Changes and Updates</a></li>
+  <li>
+<a href="#which-css-selector-should-i-use" id="markdown-toc-which-css-selector-should-i-use">Which CSS selector should I use?</a>    <ul>
+      <li><a href="#general" id="markdown-toc-general">General</a></li>
+      <li>
+<a href="#block-elements" id="markdown-toc-block-elements">Block Elements</a>        <ul>
+          <li><a href="#lines" id="markdown-toc-lines">Lines</a></li>
+          <li><a href="#code-fences" id="markdown-toc-code-fences">Code Fences</a></li>
+          <li><a href="#mermaid" id="markdown-toc-mermaid">Mermaid</a></li>
+        </ul>
+      </li>
+      <li><a href="#inline-elements" id="markdown-toc-inline-elements">Inline Elements</a></li>
+      <li><a href="#source-code-mode" id="markdown-toc-source-code-mode">Source Code Mode</a></li>
+      <li>
+<a href="#focus-mode" id="markdown-toc-focus-mode">Focus Mode</a>        <ul>
+          <li><a href="#custom-font" id="markdown-toc-custom-font">Custom Font</a></li>
+        </ul>
+      </li>
+      <li><a href="#background" id="markdown-toc-background">Background</a></li>
+      <li><a href="#controller-ui" id="markdown-toc-controller-ui">Controller UI</a></li>
+      <li><a href="#additional-ui-for-windowslinux" id="markdown-toc-additional-ui-for-windowslinux">Additional UI for Windows/Linux</a></li>
+      <li><a href="#print" id="markdown-toc-print">Print</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#debug-and-test" id="markdown-toc-debug-and-test">Debug and Test</a>    <ul>
+      <li><a href="#test-in-browser" id="markdown-toc-test-in-browser">Test in Browser</a></li>
+      <li><a href="#test-in-typora" id="markdown-toc-test-in-typora">Test in Typora</a></li>
+    </ul>
+  </li>
+  <li><a href="#tips-and-references-on-custom-style" id="markdown-toc-tips-and-references-on-custom-style">Tips and References on custom style</a></li>
+</ul>
+
+<h2 id="changes-and-updates">Changes and Updates</h2>
+
+<p>None</p>
+
+<h2 id="which-css-selector-should-i-use">Which CSS selector should I use?</h2>
+
+<h3 id="general">General</h3>
+
+<p>The window content of Typora is a webpage, so please put <code class="language-plaintext highlighter-rouge">background</code>, <code class="language-plaintext highlighter-rouge">font-family</code> or other general properties into the <code class="language-plaintext highlighter-rouge">html</code> tag. <em>On mac, if seamless window style is used, then the background color of the toolbar is defined by the <code class="language-plaintext highlighter-rouge">background-color</code> style of the <code class="language-plaintext highlighter-rouge">html</code></em>.</p>
+
+<p>The writing area is a div with id <code class="language-plaintext highlighter-rouge">#write</code>, change the <code class="language-plaintext highlighter-rouge">width</code>, <code class="language-plaintext highlighter-rouge">height</code>, <code class="language-plaintext highlighter-rouge">padding</code> will adjust the size of the writing area. The properties you set, for example, <code class="language-plaintext highlighter-rouge">color</code> for <code class="language-plaintext highlighter-rouge">html</code>, will apply to whole window content, including UI parts, like the font-color in insert table dialog, so if you just want to change the style of the writing content not the UI controller part, you could put them under <code class="language-plaintext highlighter-rouge">#write</code> selector.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/** example **/</span>
+<span class="nt">html</span><span class="o">,</span> <span class="nt">body</span> <span class="p">{</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#fefefe</span><span class="p">;</span> <span class="c">/*background color of the window and titlebar*/</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="n">helvetica</span><span class="p">,</span> <span class="nb">sans-serif</span><span class="p">;</span> <span class="c">/*custom font*/</span>
+  <span class="err">...</span>
+<span class="p">}</span>
+
+<span class="nt">html</span> <span class="p">{</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">14px</span><span class="p">;</span> <span class="c">/*default font size*/</span>
+<span class="p">}</span>
+
+<span class="nf">#write</span> <span class="p">{</span>
+  <span class="nl">max-width</span><span class="p">:</span> <span class="m">90%</span><span class="p">;</span> <span class="c">/*adjust size of the wriring area*/</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">1rem</span><span class="p">;</span> <span class="c">/*basic font size*/</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="m">#555</span><span class="p">;</span> <span class="c">/*basic font color*/</span>
+  <span class="err">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Typora will try to render all elements as other output, so, paragraphs are wrapped by <code class="language-plaintext highlighter-rouge">&lt;p&gt;</code> tag, lists are wrapped by <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code> or <code class="language-plaintext highlighter-rouge">&lt;ol&gt;</code> just like they are parsed by other Markdown processors, so you could change their styles by applying css styles to those HTML tags. Also, because of these, css files created for Wordpress or other static sites would also affect most styles in typora, therefore you would direct “borrow” css rules from them, and add missing part or do some adjustment.</p>
+
+<h3 id="block-elements">Block Elements</h3>
+
+<p>As I wrote, Typora will try to render all elements as other output, for instance, <code class="language-plaintext highlighter-rouge">&lt;p&gt;</code> for paragraph, <code class="language-plaintext highlighter-rouge">&lt;table&gt;</code> for tables, <code class="language-plaintext highlighter-rouge">&lt;h1&gt;</code> for 1st level headings, etc, so you could change most typesetting by writing styles like:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">p</span> <span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="nt">h1</span> <span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="nt">table</span> <span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="nt">table</span> <span class="nt">th</span> <span class="nt">td</span> <span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="nt">table</span> <span class="nt">tr</span><span class="nd">:nth-child</span><span class="o">(</span><span class="err">2</span><span class="nt">n</span><span class="o">)</span> <span class="nt">td</span> <span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="o">...</span>
+</code></pre></div></div>
+
+<p>You could add <code class="language-plaintext highlighter-rouge">#write</code> as ancestor selector to make the style only apply to the writing area, without affecting control component (For instance, title in some dialogs may also be wrapped by <code class="language-plaintext highlighter-rouge">h4</code> tag).</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/*this will only aplly to h4 in dialogs popped up by typora (just an example)*/</span>
+<span class="nc">.dialog</span> <span class="nt">h4</span> <span class="p">{</span><span class="err">...</span><span class="p">}</span> 
+
+<span class="c">/*this will only apply to h4 inside writing area, which is generated after user input "#### " */</span>
+<span class="nf">#write</span> <span class="nt">h4</span> <span class="p">{</span><span class="err">...</span><span class="p">}</span> 
+</code></pre></div></div>
+
+<p>Aslo, all block elements has a <code class="language-plaintext highlighter-rouge">mdtype</code> attribute. For example, you could also select headings by selector <code class="language-plaintext highlighter-rouge">[mdtype="heading"]</code>. Possible type includes <code class="language-plaintext highlighter-rouge">paragraph</code>, <code class="language-plaintext highlighter-rouge">heading</code>, <code class="language-plaintext highlighter-rouge">blockquote</code>, <code class="language-plaintext highlighter-rouge">fences</code>, <code class="language-plaintext highlighter-rouge">hr</code>, <code class="language-plaintext highlighter-rouge">def_link</code>, <code class="language-plaintext highlighter-rouge">def_footnote</code>, <code class="language-plaintext highlighter-rouge">table</code>, <code class="language-plaintext highlighter-rouge">meta_block</code>, <code class="language-plaintext highlighter-rouge">math_block</code>, <code class="language-plaintext highlighter-rouge">list</code>, <code class="language-plaintext highlighter-rouge">toc</code>, <code class="language-plaintext highlighter-rouge">list_item</code>, <code class="language-plaintext highlighter-rouge">table_row</code>, <code class="language-plaintext highlighter-rouge">table_cell</code>, <code class="language-plaintext highlighter-rouge">line</code>. But in most cases, tag selector is enough.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">mdtype</th>
+      <th style="text-align: left">Output Css Selector</th>
+      <th style="text-align: left">Explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">paragraph</td>
+      <td style="text-align: left">p</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">line</td>
+      <td style="text-align: left">.md-line</td>
+      <td style="text-align: left">A paragraph can contain one or more <code class="language-plaintext highlighter-rouge">.md-line</code>
+</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">heading</td>
+      <td style="text-align: left">h1~h6</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">blockquote</td>
+      <td style="text-align: left">blockquote</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">list (unordered list)</td>
+      <td style="text-align: left">ul li</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">list (ordered list)</td>
+      <td style="text-align: left">ol li</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">list (task)</td>
+      <td style="text-align: left">ul.task-list li. task-list-item</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">toc</td>
+      <td style="text-align: left">.md-toc</td>
+      <td style="text-align: left">Also refer to [this doc][toc]</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">fences (before codemirror is initialized)</td>
+      <td style="text-align: left">pre.md-fences.mock-cm</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">fences</td>
+      <td style="text-align: left">pre.md-fences</td>
+      <td style="text-align: left">please refer to “Code Fences” section</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">diagrams</td>
+      <td style="text-align: left">pre[lang=’sequence’], pre[lang=’flow’], pre[lang=’mermaid’]</td>
+      <td style="text-align: left">They are special code fences with certain code language.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">hr</td>
+      <td style="text-align: left">hr</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">def_link</td>
+      <td style="text-align: left">.md-def-link</td>
+      <td style="text-align: left">with children <code class="language-plaintext highlighter-rouge">.md-def-name</code>, <code class="language-plaintext highlighter-rouge">.md-def-content</code>, <code class="language-plaintext highlighter-rouge">.md-def-title</code>
+</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">def_footnote</td>
+      <td style="text-align: left">.md-def-footnote</td>
+      <td style="text-align: left">with children <code class="language-plaintext highlighter-rouge">.md-def-name</code>, <code class="language-plaintext highlighter-rouge">.md-def-content</code>
+</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">meta_block</td>
+      <td style="text-align: left">pre.md-meta-block</td>
+      <td style="text-align: left">content for YAML front matters</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">math_block</td>
+      <td style="text-align: left">[mdtype=”math_block”]</td>
+      <td style="text-align: left">preview part is <code class="language-plaintext highlighter-rouge">.mathjax-block</code>, html content is generated via <a href="http://www.mathjax.org">MathJax</a>. TeX editor is powered by <a href="http://codemirror.net">CodeMirror</a>, please refer to “Code Fences” section</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">table</td>
+      <td style="text-align: left">table thead tbody th tr td</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="lines">Lines</h4>
+
+<p>Typora will render hard line break as-is. Therefore, a paragraph may contain multiple lines split by <code class="language-plaintext highlighter-rouge">\n</code>, and <code class="language-plaintext highlighter-rouge">.md-line</code> selector is used for each “line” inside a <code class="language-plaintext highlighter-rouge">&lt;p&gt;</code>.</p>
+
+<h4 id="code-fences">Code Fences</h4>
+
+<p>Syntax highlight is enabled by <a href="http://codemirror.net">CodeMirror</a>’s feature. Please refer to <a href="https://support.typora.io/Code-Block-Styles">this doc</a> for detail.</p>
+
+<h4 id="mermaid">Mermaid</h4>
+
+<p>Examples: <a href="https://github.com/knsv/mermaid/blob/master/dist/mermaid.css">mermaid.css</a>, <a href="https://github.com/knsv/mermaid/blob/master/dist/mermaid.dark.css">mermaid.dark.css</a>, <a href="https://github.com/knsv/mermaid/blob/master/dist/mermaid.forest.css">mermaid.forest.css</a>.</p>
+
+<h3 id="inline-elements">Inline Elements</h3>
+
+<p>Inline elements are also rendered as it is rendered by most markdown parsers. So following could work:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">strong</span> <span class="p">{</span>
+  <span class="nl">font-weight</span><span class="p">:</span> <span class="nb">bold</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">em</span> <span class="p">{</span><span class="err">..</span><span class="p">}</span>
+<span class="nt">code</span> <span class="p">{</span><span class="err">..</span><span class="p">}</span>
+<span class="nt">a</span> <span class="p">{</span><span class="err">..</span><span class="p">}</span>
+<span class="nt">img</span> <span class="p">{</span><span class="err">..</span><span class="p">}</span>
+<span class="nt">mark</span> <span class="p">{</span><span class="err">..</span><span class="p">}</span> <span class="c">/*highlight*/</span>
+</code></pre></div></div>
+
+<p>An inline elements usually includes a wrapper span, meta syntax, and output inline element, for example <code class="language-plaintext highlighter-rouge">**strong**</code> will be rendered as</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--wrapper for strong element--&gt;</span>
+<span class="nt">&lt;span</span> <span class="na">md-inline=</span><span class="s">"strong"</span> <span class="na">class=</span><span class="s">""</span><span class="nt">&gt;</span> 
+  
+  <span class="c">&lt;!--meta syntax for strong element--&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"md-meta md-before"</span><span class="nt">&gt;</span>**<span class="nt">&lt;/span&gt;</span> 
+  
+    <span class="c">&lt;!--output for strong element--&gt;</span>
+    <span class="nt">&lt;strong&gt;</span>
+      <span class="c">&lt;!--inner output--&gt;</span>
+      <span class="nt">&lt;span</span> <span class="na">md-inline=</span><span class="s">"plain"</span><span class="nt">&gt;</span>strong<span class="nt">&lt;/span&gt;</span> 
+    <span class="nt">&lt;/strong&gt;</span>
+  
+   <span class="c">&lt;!--meta syntax for strong element--&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"md-meta md-after"</span><span class="nt">&gt;</span>**<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/span&gt;</span>
+</code></pre></div></div>
+
+<p>As you can see, the full part of an inline element is wrapped by a <code class="language-plaintext highlighter-rouge">span</code> with an <code class="language-plaintext highlighter-rouge">md-inline</code> attribute indicates the type info of the parse result. Possible attribute includes (some inline syntax need to be enabled from preference panel):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"><code class="language-plaintext highlighter-rouge">md-inline</code></th>
+      <th style="text-align: left">syntax</th>
+      <th style="text-align: left">Output Tag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">plain</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">plain</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">span</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">strong</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">**strong**</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">strong</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">em</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">*em*</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">em</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">code</td>
+      <td style="text-align: left"><code>`code`</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">code</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">underline</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">&lt;u&gt;underline&lt;/u&gt;</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">u</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">escape</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">\(</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">span</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">tag</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">&lt;button&gt;</code></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">del</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">~~del~~</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">del</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">footnote</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">^1</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">sup</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">emoji</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">:smile:</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">span</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">inline_math</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">$x^2$</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">span</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">subscript</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">~sub~</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">sub</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">superscript</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">^sup^</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">sup</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">linebreak</td>
+      <td style="text-align: left">(two whitespace at end of a line)</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">highlight</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">==highlight==</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">mark</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">url</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">http://typora.io</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">a</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">autolink</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">&lt;http://typora.io&gt;</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">a</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">link</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">[link](href)</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">a</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">reflink</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">[link][ref]</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">a</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">image</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">![img](src)</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">img</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">refimg</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">![img][ref]</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">img</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Following are explanations about how Typora style inline markdown syntax such as <code class="language-plaintext highlighter-rouge">*</code> or <code class="language-plaintext highlighter-rouge">_</code>, which is hidden in most cases in Typora. Usually you do not need to set CSS rules for them specifically.</p>
+
+<p>Meta syntax like <code class="language-plaintext highlighter-rouge">**</code> or <code class="language-plaintext highlighter-rouge">==</code> of those inline elements will disappear when you convert a markdown file to HTML. So they are wrapped by class <code class="language-plaintext highlighter-rouge">md-meta</code> and has style <code class="language-plaintext highlighter-rouge">display:none</code> by default. Some syntax like the markdown syntax for image will also be hidden by default, and they are wrapped by <code class="language-plaintext highlighter-rouge">md-content</code> class. When the cursor is inside those inline elements, the focused one will be wrapped by <code class="language-plaintext highlighter-rouge">md-expand</code> class, then <code class="language-plaintext highlighter-rouge">.md-meta</code> and <code class="language-plaintext highlighter-rouge">.md-content</code> will become visible. So, apply styles to <code class="language-plaintext highlighter-rouge">.md-meta</code> and <code class="language-plaintext highlighter-rouge">.md-content</code> if you want to modify the style of those meta syntax.</p>
+
+<h3 id="source-code-mode">Source Code Mode</h3>
+
+<p>SourceCode Mode is also powered by <a href="http://codemirror.net">CodeMirror</a>, so the class it uses for syntax highlight is same as code fences (<a href="https://support.typora.io/Code-Block-Styles">detail here</a>). Please note that code fences use codemirror theme <code class="language-plaintext highlighter-rouge">.cm-s-inner</code>, while in source code mode, codemirror theme is <code class="language-plaintext highlighter-rouge">.cm-s-typora-default</code>. So the CSS is like:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.cm-s-typora-default</span> <span class="nc">.cm-header</span> <span class="p">{</span>
+  <span class="c">/*styles for h1~h6 in source code mode*/</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="focus-mode">Focus Mode</h3>
+
+<p>For this topic, please refer to <a href="https://support.typora.io/Change-Styles-in-Focus-Mode/">this doc</a></p>
+
+<h4 id="custom-font">Custom Font</h4>
+
+<p>For this topic, please refer to <a href="https://support.typora.io/Custom-Font/">this doc</a>.</p>
+
+<h3 id="background">Background</h3>
+
+<p>For this topic, please refer to <a href="https://support.typora.io/Backgound/">this doc</a>.</p>
+
+<h3 id="controller-ui">Controller UI</h3>
+
+<p>Most UI components including tooltip, dialog and buttons are painted by HTML. And you only need to change those part when you find the UI components are incompatible with your editor theme after finishing steps above. HTML files from the <a href="https://github.com/typora/typora-theme-toolkit">toolkit</a> includes most common UI components for you to easily debug.</p>
+
+<h3 id="additional-ui-for-windowslinux">Additional UI for Windows/Linux</h3>
+
+<p>The Windows/Linux version of typora use much more HTML-powered components than macOS version, including context menu, preference panel, and even window frame itself if you use “unibody” window style on Windows.</p>
+
+<p>HTML files from the <a href="https://github.com/typora/typora-theme-toolkit">toolkit</a> could include most common UI components for you to easily debug.</p>
+
+<h3 id="print">Print</h3>
+
+<p>Write css inside following block will make them only change the style of printed one or exported PDF.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@media</span> <span class="n">print</span> <span class="p">{</span>
+    <span class="c">/* for example: */</span>
+    <span class="nc">.typora-export</span> <span class="o">*</span> <span class="p">{</span>
+        <span class="nl">-webkit-print-color-adjust</span><span class="p">:</span> <span class="n">exact</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c">/* add styles here */</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="debug-and-test">Debug and Test</h2>
+
+<h3 id="test-in-browser">Test in Browser</h3>
+
+<p>We provide some html files under <code class="language-plaintext highlighter-rouge">html-preview</code> folder from the <a href="https://github.com/typora/typora-theme-toolkit">toolkit</a> to preview your theme from Safari or Chrome. To use them, please rename and put your css file into <code class="language-plaintext highlighter-rouge">html-preview/theme/test.css</code>.</p>
+
+<h3 id="test-in-typora">Test in Typora</h3>
+
+<p>Follow <a href="/doc/Install-Theme/">this doc</a> to learn about how to install a theme into Typora.</p>
+
+<p>Then for mac users, check <code class="language-plaintext highlighter-rouge">enable debug mode</code> from help menu, then click “Inspect Element” from context menu to pop up DevTools.</p>
+
+<p>For Windows/Linux users, you could pop up the DevTools from <code class="language-plaintext highlighter-rouge">Toggle DevTools</code> from view menu.</p>
+
+<h2 id="tips-and-references-on-custom-style">Tips and References on custom style</h2>
+
+<p>Related documents are <a href="http://support.typora.io/style">here</a>.</p>
+
+<p>Please make a pull request to <a href="https://github.com/typora/wiki-website">typora-wiki-site</a> if you have some tips to share.</p>
+
+
+    </div>
+  </div>
+
+
+
+  <footer id="post-footer" style="background-color: rgb(51, 51, 51); padding-top:50px; padding-bottom:50px; text-align:center;font-size:13px;">
+      hosted on <a href="https://github.com/typora/typora-theme-gallery">GitHub</a>.
+  </footer>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56771470-2', 'auto');
+  ga('set', 'page', '/support');
+  ga('send', 'pageview');
+
+  </script>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "jtsmqoysmf");
+  </script>
+
+<!--link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script-->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"c82de873dbaf4f6589efa8c5d9abc46c","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
