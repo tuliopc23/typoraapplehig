@@ -23,13 +23,11 @@
    ======================================== */
 
 @font-face {
-  font-family: "SF Pro Display";
+  font-family: "SF Pro";
   src:
-    local(".SFNSDisplay-Regular"),
-    local("SF Pro Display"),
-    url("./apple-hig/SF Pro/SF Pro.woff2") format("woff2"),
-    url("./apple-hig/SF Pro/SF Pro.woff") format("woff");
-  font-weight: 100 900;
+    url("apple-hig/4b57277e89dfdd30c9a6b69acaf78d3a.woff2") format("woff2"),
+    url("apple-hig/4b57277e89dfdd30c9a6b69acaf78d3a.woff") format("woff");
+  font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
@@ -37,23 +35,19 @@
 @font-face {
   font-family: "SF Pro Text";
   src:
-    local(".SFNSText"),
-    local("SF Pro Text"),
-    url("./apple-hig/SF Pro Text/SF Pro Text.woff2") format("woff2"),
-    url("./apple-hig/SF Pro Text/SF Pro Text.woff") format("woff");
-  font-weight: 100 900;
+    url("apple-hig/a936eebbc2f331a2b3868a9e32a31152.woff2") format("woff2"),
+    url("apple-hig/a936eebbc2f331a2b3868a9e32a31152.woff") format("woff");
+  font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "SF Mono";
+  font-family: "SF Mono Medium";
   src:
-    local("SFMono-Regular"),
-    local("SF Mono"),
-    url("./apple-hig/SF Mono Medium/SF Mono Medium.woff2") format("woff2"),
-    url("./apple-hig/SF Mono Medium/SF Mono Medium.woff") format("woff");
-  font-weight: 100 900;
+    url("apple-hig/4c84f01ded4f950150fc30c12a58b5b1.woff2") format("woff2"),
+    url("apple-hig/4c84f01ded4f950150fc30c12a58b5b1.woff") format("woff");
+  font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
@@ -77,11 +71,8 @@
 
 :root {
   /* === Font Families === */
-  --primitive-font-system:
-    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
-    system-ui, sans-serif;
-  --primitive-font-mono:
-    "SF Mono", ui-monospace, Menlo, Monaco, "Cascadia Code", monospace;
+  --primitive-font-system: "SF Pro Text", sans-serif;
+  --primitive-font-mono: "SF Mono Medium", monospace;
 
   /* === Text Sizes (iOS default text styles) === */
   --primitive-text-11: 11px; /* Caption2  */
@@ -383,7 +374,7 @@
    REDUCED TRANSPARENCY / MOTION
    ======================================== */
 
-@media (prefers-reduced-transparency: reduce) {
+@media (prefers-reduced-motion: reduce) {
   :root {
     --glass-blur-amount: 0px;
     --color-glass-background: var(--color-background-secondary);
@@ -415,7 +406,6 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
   font-family: var(--font-family-primary);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
@@ -508,7 +498,7 @@ h6 {
 }
 
 h1 {
-  font-family: "SF Pro Display", var(--font-family-primary);
+  font-family: "SF Pro", sans-serif;
   font-size: var(--font-size-large-title);
   line-height: var(--line-height-large-title);
   font-weight: 700;
@@ -517,7 +507,7 @@ h1 {
 }
 
 h2 {
-  font-family: "SF Pro Display", var(--font-family-primary);
+  font-family: "SF Pro", sans-serif;
   font-size: var(--font-size-title1);
   line-height: var(--line-height-title1);
   font-weight: 700;
@@ -526,7 +516,7 @@ h2 {
 }
 
 h3 {
-  font-family: "SF Pro Display", var(--font-family-primary);
+  font-family: "SF Pro", sans-serif;
   font-size: var(--font-size-title2);
   line-height: var(--line-height-title2);
   font-weight: 600;
@@ -535,7 +525,7 @@ h3 {
 }
 
 h4 {
-  font-family: "SF Pro Display", var(--font-family-primary);
+  font-family: "SF Pro", sans-serif;
   font-size: var(--font-size-title3);
   line-height: var(--line-height-title3);
   font-weight: 600;
@@ -544,7 +534,7 @@ h4 {
 }
 
 h5 {
-  font-family: "SF Pro Text", var(--font-family-primary);
+  font-family: "SF Pro Text", sans-serif;
   font-size: var(--font-size-headline);
   line-height: var(--line-height-headline);
   font-weight: 600;
@@ -553,7 +543,7 @@ h5 {
 }
 
 h6 {
-  font-family: "SF Pro Text", var(--font-family-primary);
+  font-family: "SF Pro Text", sans-serif;
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   font-weight: 600;
@@ -758,7 +748,6 @@ li {
    ======================================== */
 
 code {
-  font-family: "SF Mono", ui-monospace, Menlo, Monaco, "Cascadia Code", monospace;
   font-family: var(--font-family-mono);
   font-size: 0.9em;
   background-color: var(--color-background-secondary);
@@ -803,7 +792,6 @@ code {
 }
 /* Code content */
 #write .CodeMirror {
-  font-family: "SF Mono", ui-monospace, Menlo, Monaco, "Cascadia Code", monospace;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-footnote);
   line-height: var(--line-height-footnote);
@@ -943,7 +931,7 @@ code {
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-sm);
   margin: 0;
-  transition: 
+  transition:
     transform var(--transition-fast),
     box-shadow var(--transition-fast);
 }
